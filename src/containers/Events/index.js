@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EventCard from "../../components/EventCard";
 import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
@@ -11,12 +11,28 @@ const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState();
+  const [type, setType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
+  const [filteredEvents, setFilteredEvents] = useState();
+  useEffect(() => {
+    setFilteredEvents(
+      (!type
+        ? data?.events ?? []
+        : data?.events.filter((event) => event.type === type) || []
+      ).filter((event, index) => {
+        if (
+          (currentPage - 1) * PER_PAGE <= index &&
+          PER_PAGE * currentPage > index
+        ) {
+          return true;
+        }
+        return false;
+      })
+    );
+  }, [type, data]);
+  /* (!type
       ? data?.events
-      : data?.events) || []
+      : data?.events.filter((event) => event.type === type)) || []
   ).filter((event, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
@@ -25,7 +41,7 @@ const EventList = () => {
       return true;
     }
     return false;
-  });
+  }); */
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
@@ -45,19 +61,20 @@ const EventList = () => {
             onChange={(value) => (value ? changeType(value) : changeType(null))}
           />
           <div id="events" className="ListContainer">
-            {filteredEvents.map((event) => (
-              <Modal key={event.id} Content={<ModalEvent event={event} />}>
-                {({ setIsOpened }) => (
-                  <EventCard
-                    onClick={() => setIsOpened(true)}
-                    imageSrc={event.cover}
-                    title={event.title}
-                    date={new Date(event.date)}
-                    label={event.type}
-                  />
-                )}
-              </Modal>
-            ))}
+            {Array.isArray(filteredEvents) && // ajout d'une condition pour vérifier que filteredEvents est bien initialisé et est bien un tableau
+              filteredEvents.map((event) => (
+                <Modal key={event.id} Content={<ModalEvent event={event} />}>
+                  {({ setIsOpened }) => (
+                    <EventCard
+                      onClick={() => setIsOpened(true)}
+                      imageSrc={event.cover}
+                      title={event.title}
+                      date={new Date(event.date)}
+                      label={event.type}
+                    />
+                  )}
+                </Modal>
+              ))}
           </div>
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
