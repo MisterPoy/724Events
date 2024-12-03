@@ -3,9 +3,8 @@
 /* eslint-disable react/require-default-props */
 // rajout d'un commentaires pour désactiver la règle esLint
 // react/require-default-props
-import { useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-
 import "./style.scss";
 
 const Select = ({

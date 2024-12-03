@@ -2,7 +2,8 @@ import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
 import PeopleCard from "../../components/PeopleCard";
-
+// on import le modalEvent pour pouvoir l'afficher sur "Notre dernière prestation"
+import ModalEvent from "../../containers/ModalEvent";
 import "./style.scss";
 import EventList from "../../containers/Events";
 import Slider from "../../containers/Slider";
@@ -15,9 +16,13 @@ import { useData } from "../../contexts/DataContext";
 const Page = () => {
   const { data } = useData();
   // Extraction du dernier événements
+
   const lastEvent = data?.events?.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   )[0]; // on reclasse les événments par date
+  console.log(lastEvent);
+  // Etat pour la modal
+
   return (
     <>
       <header>
@@ -124,16 +129,27 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          {lastEvent ? (
-            <EventCard
-              imageSrc={lastEvent?.cover}
-              title={lastEvent?.title}
-              date={new Date(lastEvent?.date)}
-              small
-              label="boom"
-            />
+          {!lastEvent ? ( // On utilise le lastEvent pour créer la card
+          // "Notre dernière prestation et sa modale au click"
+            "Waiting last event..."
           ) : (
-            <p>Aucun événement trouvé</p>
+            <Modal
+              key={lastEvent.id}
+              Content={<ModalEvent event={lastEvent} />}
+            >
+              {({ setIsOpened }) => (
+                <div data-testid="event-card">
+                  <EventCard
+                    onClick={() => setIsOpened(true)}
+                    imageSrc={lastEvent?.cover}
+                    title={lastEvent?.title}
+                    date={new Date(lastEvent?.date)}
+                    small
+                    label={lastEvent?.type}
+                  />
+                </div>
+              )}
+            </Modal>
           )}
         </div>
         <div className="col contact">
