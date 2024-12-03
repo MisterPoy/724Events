@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */ 
+// rajout d'un commentaires pour désactiver la règle esLint
+// react/require-default-props
 import PropTypes from "prop-types";
 
 import "./style.scss";
@@ -7,7 +10,14 @@ export const BUTTON_TYPES = {
   SUBMIT: 2,
 };
 
-const Button = ({ title, onClick, type, disabled, children }) => {
+// Les valeurs par défaut ont été déplacées des `defaultProps` vers les paramètres de la fonction
+const Button = ({
+  title = "",
+  onClick = () => null,
+  type = BUTTON_TYPES.DEFAULT,
+  disabled = false,
+  children = null,
+}) => {
   switch (type) {
     case BUTTON_TYPES.DEFAULT:
       return (
@@ -58,12 +68,5 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node,
 };
-Button.defaultProps = {
-  disabled: false,
-  onClick: () => null,
-  type: BUTTON_TYPES.DEFAULT,
-  title: "",
-  children: null
-}
 
 export default Button;

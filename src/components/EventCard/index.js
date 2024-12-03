@@ -1,11 +1,15 @@
+/* eslint-disable react/require-default-props */
+// rajout d'un commentaires pour désactiver la règle esLint
+// react/require-default-props
 import PropTypes from "prop-types";
 import { getMonth } from "../../helpers/Date";
 
 import "./style.scss";
 
+// Les valeurs par défaut ont été déplacées des `defaultProps` vers les paramètres de la fonction
 const EventCard = ({
   imageSrc,
-  imageAlt,
+  imageAlt = "image",
   date = new Date(),
   title,
   label,
@@ -35,11 +39,6 @@ EventCard.propTypes = {
   title: PropTypes.string.isRequired,
   small: PropTypes.bool,
   label: PropTypes.string.isRequired,
-};
-
-EventCard.defaultProps = {
-  imageAlt: "image",
-  small: false,
 };
 
 export default EventCard;

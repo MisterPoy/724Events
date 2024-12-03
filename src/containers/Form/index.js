@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */ 
+// rajout d'un commentaires pour désactiver la règle esLint
+// react/require-default-props
 import { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import Field, { FIELD_TYPES } from "../../components/Field";
@@ -9,7 +12,8 @@ const mockContactApi = () =>
     setTimeout(resolve, 500);
   });
 
-const Form = ({ onSuccess, onError }) => {
+  // Les valeurs par défaut ont été déplacées des `defaultProps` vers les paramètres de la fonction
+const Form = ({ onSuccess= () => null, onError = () => null }) => {
   const [sending, setSending] = useState(false);
   const sendContact = useCallback(
     async (evt) => {
@@ -61,11 +65,6 @@ const Form = ({ onSuccess, onError }) => {
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
-};
-
-Form.defaultProps = {
-  onError: () => null,
-  onSuccess: () => null,
 };
 
 export default Form;

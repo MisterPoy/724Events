@@ -1,8 +1,13 @@
 /* istanbul ignore file */
+/* eslint-disable react/require-default-props */
+// rajout d'un commentaires pour désactiver la règle esLint
+// react/require-default-props
+
 import PropTypes from "prop-types";
 import "./style.scss";
 
-const Logo = ({ size }) => (
+// Les valeurs par défaut ont été déplacées des `defaultProps` vers les paramètres de la fonction
+const Logo = ({ size = "small" }) => (
   <div className="Logo">
     <svg
       width={size === "large" ? "160" : "130"}
@@ -144,9 +149,6 @@ const Logo = ({ size }) => (
 
 Logo.propTypes = {
   size: PropTypes.string,
-};
-Logo.defaultProps = {
-  size: "small",
 };
 
 export default Logo;
