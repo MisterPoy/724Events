@@ -13,12 +13,16 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Initialisation d'un hook useState pour créer une variable d'état qui gère
+// les événements filtrés en fonction du type sélectionné, initialitement vide
   const [filteredEvents, setFilteredEvents] = useState();
   useEffect(() => {
     setFilteredEvents(
+      // Filtrage des événements par type et pagination en fonction de la page actuelle
       (!type
-        ? data?.events ?? []
-        : data?.events.filter((event) => event.type === type) || []
+        ? data?.events ?? [] // si aucun type n'est sélectionné, on prends tous les événements
+        : data?.events.filter((event) => event.type === type) || [] // Si un type est sélectionné, on filtre par type
       ).filter((event, index) => {
         if (
           (currentPage - 1) * PER_PAGE <= index &&
@@ -30,18 +34,8 @@ const EventList = () => {
       })
     );
   }, [type, data]);
-  /* (!type
-      ? data?.events
-      : data?.events.filter((event) => event.type === type)) || []
-  ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  }); */
+ 
+  
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);

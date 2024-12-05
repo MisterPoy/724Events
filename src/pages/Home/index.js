@@ -15,13 +15,11 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  // Extraction du dernier événements
-
+ // Extraction du dernier événement, trié par date, pour affichage sous "Notre dernière prestation"
   const lastEvent = data?.events?.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
-  )[0]; // on reclasse les événments par date
-  console.log(lastEvent);
-  // Etat pour la modal
+  )[0];
+
 
   return (
     <>
@@ -129,11 +127,12 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          {!lastEvent ? ( // On utilise le lastEvent pour créer la card
-          // "Notre dernière prestation et sa modale au click"
+          {!lastEvent ? ( // Vérification si un dernier événement existe, sinon affichage d'un message "en attente"
+          
             "Waiting last event..."
           ) : (
-            <Modal
+            // Affichage du dernier événement dans une modal
+            <Modal // Encapsulation de l'EventCard dans une modal pour afficher les détails de l'événement au clic
               key={lastEvent.id}
               Content={<ModalEvent event={lastEvent} />}
             >

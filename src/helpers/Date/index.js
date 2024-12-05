@@ -1,4 +1,6 @@
 export const MONTHS = {
+  // Modification des clés dans les paires clé/valeur en commençant à 0
+  // afin que l'index de MONTHS corresponde bien aux mois et s'affiche correctement dans les cartes d'événements.
   0: "janvier",
   1: "février",
   2: "mars",

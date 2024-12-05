@@ -7,22 +7,26 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
+
   const byDateDesc = data?.focus
     ? data.focus.sort((evtA, evtB) =>
         new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
       )
-    : []; // rajouter une conditons pour vérifier si date contient des données
+    : []; // Si 'data' est vide ou n'existe pas, on initialise avec un tableau vide.
+
 
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
+      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), // Correction de la condition pour correspondre au nombre d'éléments
       5000
     );
   };
 
   useEffect(() => {
     nextCard();
-  }, [index, byDateDesc]);
+  }, [index, byDateDesc]); // Tableau de dépendance ajouté pour que l'effet se déclenche à chaque modification
+  // de index ou byDateDesc
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
@@ -42,9 +46,10 @@ const Slider = () => {
           </div>
         </div>
       ))}
+      
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
-          {byDateDesc?.map((event, radioIdx) => (
+          {byDateDesc?.map((event, radioIdx) => ( // on sépare la pagination pour générer et gérer les bouton radio
             <input
               key={event.title} // event n'a pas d'id, on remplace par le title de l'event pour donné une clef unique
               type="radio"

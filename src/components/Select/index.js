@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/require-default-props */
-// rajout d'un commentaires pour désactiver la règle esLint
+// Ajout de commentaires pour désactiver les règles ESLint
 // react/require-default-props
 import React, { useState } from "react";
 import PropTypes from "prop-types";
@@ -18,9 +18,9 @@ const Select = ({
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
   const changeValue = (newValue) => {
-    setValue(newValue);
-    setCollapsed(true);
-    onChange(newValue);
+    setValue(newValue); 
+    setCollapsed(true); // Initialisation de setCollapsed à true pour gérer l'ouverture et la fermeture des filtres
+    onChange(newValue); // on donne newValue comme paramètre à la fonction Onchange qui gère le clic
   };
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">

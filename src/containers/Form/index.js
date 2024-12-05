@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */ 
-// rajout d'un commentaires pour désactiver la règle esLint
-// react/require-default-props
+// Désactivation de la règle ESLint "react/require-default-props" qui exige que les props aient 
+// des valeurs par défaut dans les propTypes.
 import { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import Field, { FIELD_TYPES } from "../../components/Field";
@@ -22,8 +22,8 @@ const Form = ({ onSuccess= () => null, onError = () => null }) => {
       // We try to call mockContactApi
       try {
         await mockContactApi();
-        console.log("onSuccess is being called");
-        onSuccess(); // rajout de l'appel de la fonction onSuccess pour afficher la modale
+       
+        onSuccess(); // Ajout de l'appel de la fonction onSuccess pour gérer la réussite de l'envoi et afficher une modale
         setSending(false);
       } catch (err) {
         setSending(false);
