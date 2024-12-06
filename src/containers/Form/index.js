@@ -23,8 +23,9 @@ const Form = ({ onSuccess= () => null, onError = () => null }) => {
       try {
         await mockContactApi();
        
-        onSuccess(); // Ajout de l'appel de la fonction onSuccess pour gérer la réussite de l'envoi et afficher une modale
+        // Ajout de l'appel de la fonction onSuccess pour gérer la réussite de l'envoi et afficher une modale
         setSending(false);
+        onSuccess();
       } catch (err) {
         setSending(false);
         onError(err);
